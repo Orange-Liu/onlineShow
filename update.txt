@@ -1,22 +1,151 @@
-0626��
-��ҳ�����˸�Ƥ��
+0626：
+网页版套了个皮肤
 
-0628��
-�ο����ѷ�����ֱ�����ƶ��˽�����vlc���в���
+0628：
+参考吧友分享的直播，移动端将调用vlc进行播放
 
-0701��
-�޸���ckplayerֱ�Ӳ��Ŷ����ӿ��ٵ�����
+0701：
+修复了ckplayer直接播放短链接卡顿的问题
 
-0704��
-�޸���һЩ�����ַ����߱��鵼����ʾ%3F %20�ȱ��������
+0704：
+修复了一些特殊字符或者表情导致显示%3F %20等编码的问题
 
-0710��
-�޸����ƶ���ҳ��һЩ�����ַ����߱��鵼����ʾ%3F %20�ȱ�������⣬�Լ�һЩСBug
-�������Ƶ���ŵ�ַ��������������������
+0710：
+修复了移动端页面一些特殊字符或者表情导致显示%3F %20等编码的问题，以及一些小Bug
+输出了视频播放地址，便于其他播放器播放
 
-Todo��
-Pc��ͻ���
-IOS�ͻ���
+Todo：
+Pc版客户端
+IOS客户端
 
 
+
+
+
+
+https://www.echoteen.com/daxiu-source.html
+
+#############################################################################################
+安装：
+git clone https://github.com/david7207/onlineShow.git
+1
+git clone https://github.com/david7207/onlineShow.git
+BTW，最近貌似很多人喜欢源码里加点删库的代码，大家自行检查，我等会也会带大家来分析的。
+
+Nginx配置
+server
+{
+    listen 80;
+    server_name show.domain;#内网随便弄个域名
+    index index.php index.html index.htm default.php default.htm default.html;
+    root /path;#代码路径
+    
+    #SSL-START SSL相关配置，请勿删除或修改下一行带注释的404规则
+    #error_page 404/404.html;
+    #SSL-END
+    
+    #ERROR-PAGE-START  错误页配置，可以注释、删除或修改
+    error_page 404 /404.html;
+    error_page 502 /502.html;
+    #ERROR-PAGE-END
+    
+    #PHP-INFO-START  PHP引用配置，可以注释或修改
+    include enable-php-72.conf;#为了php解析用的
+    #PHP-INFO-END
+    
+   
+    #禁止访问的文件或目录
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.svn|\.project|LICENSE|README.md)
+    {
+        return 404;
+    }
+    
+    #一键申请SSL证书验证目录相关设置
+    location ~ \.well-known{
+        allow all;
+    }
+    
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires      30d;
+        error_log off;
+        access_log off;
+    }
+    
+    location ~ .*\.(js|css)?$
+    {
+        expires      12h;
+        error_log off;
+        access_log off; 
+    }
+}
+
+server
+{
+    listen 80;
+    server_name show.domain;#内网随便弄个域名
+    index index.php index.html index.htm default.php default.htm default.html;
+    root /path;#代码路径
+    
+    #SSL-START SSL相关配置，请勿删除或修改下一行带注释的404规则
+    #error_page 404/404.html;
+    #SSL-END
+    
+    #ERROR-PAGE-START  错误页配置，可以注释、删除或修改
+    error_page 404 /404.html;
+    error_page 502 /502.html;
+    #ERROR-PAGE-END
+    
+    #PHP-INFO-START  PHP引用配置，可以注释或修改
+    include enable-php-72.conf;#为了php解析用的
+    #PHP-INFO-END
+    
+   
+    #禁止访问的文件或目录
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.svn|\.project|LICENSE|README.md)
+    {
+        return 404;
+    }
+    
+    #一键申请SSL证书验证目录相关设置
+    location ~ \.well-known{
+        allow all;
+    }
+    
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires      30d;
+        error_log off;
+        access_log off;
+    }
+    
+    location ~ .*\.(js|css)?$
+    {
+        expires      12h;
+        error_log off;
+        access_log off; 
+    }
+}
+抄了一段宝塔的配置，大家自行配置，建议使用宝塔可(sha)视(gua)化(shi)操作。上面的配置不能照搬，肯定有问题的。
+
+本地域名解析：
+博主使用的是openwrt，直接在/etc/hosts里创建一个host指向网站服务器地址。
+
+我是使用的树莓派，所以指向树莓派地址，如果是本机的话，可以使用本机的host指向
+
+路由器上指向的话，所有的终端都可以访问的，比较爽~
+
+原理：
+大秀主播源码分享，可以作为你的私人影院了
+
+其实就是打开这个清单。
+
+放在浏览器里打开
+
+大秀主播源码分享，可以作为你的私人影院了
+
+就看到很多列表啦~
+
+结语
+因为内容的特殊性，所以千万别放在公网上，自己电脑下载个xampp或者PHP一键包，或者树莓派搭建个宝塔，或者openwrt搭建个php，nginx环境，就可以自己躲被窝看小姐姐聊天啦~
 
